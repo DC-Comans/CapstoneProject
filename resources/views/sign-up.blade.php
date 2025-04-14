@@ -1,4 +1,4 @@
-    <html lang="en">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,17 +14,23 @@
                   <form>
                     <label for="username"><strong>Username:</strong></label>
                     <input type="text" id="username" name="username">
+
+                    <label for="email"><strong>Email:</strong></label>
+                    <input type="text" id="email" name="email">
             
                     <label for="password"><strong>Password:</strong></label>
                     <input type="password" id="password" name="password">
+
+                    <label for="passwordCheck"><strong>Re-type Password:</strong></label>
+                    <input type="password" id="passwordCheck" name="passwordCheck">
             
-                    <button type="submit" class="btn login-btn">Login</button>
+                    <button type="submit" class="btn login-btn">Sign up</button>
                   </form>
                 </div>
             
                 <div class="signup-box">
-                  <span>Don't have an account yet? Just Sign up</span>
-                  <a href="sign-up"><button class="btn signup-btn" >Sign Up</button> </a>
+                  <span>Already have an account? Just Login!</span>
+                  <a href="/"><button class="btn signup-btn">Login</button></a>
                 </div>
             </div>
               </div>

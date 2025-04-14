@@ -8,9 +8,11 @@
     <body>
 
         <x-layout>
-
-            <p>About us</p>
-
+          
+            
+            
+              
+        
         </body>
-        </html>
-</x-layout>
+                </html>
+        </x-layout>
