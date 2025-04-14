@@ -17,6 +17,6 @@
 
 <!-- Bottom of page -->
 <footer>
-<p>{{date('Y')}}</p>
-<p>All rights reserved</p>
+    <p>HELP Application. All rights reserved. {{date('Y')}}</p>
+
 </footer>

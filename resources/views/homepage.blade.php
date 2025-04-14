@@ -25,6 +25,7 @@
                 <div class="signup-box">
                   <span>Don't have an account yet? Just Sign up</span>
                   <a href="sign-up"><button class="btn signup-btn" >Sign Up</button> </a>
+                  
                 </div>
             </div>
               </div>

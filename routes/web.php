@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,9 +14,7 @@ Route::get('/sign-up', [UserController::class, "signUp"]);
 
 Route::get('/profile', [UserController::class, "account"]);
 
-Route::get('/quiz', function () {
-    return view('quiz-page');
-});
+Route::get('/quiz', [QuizController::class, "quizPage"]);
 
 Route::get('/resources', function () {
     return view('resources');
@@ -24,3 +23,5 @@ Route::get('/resources', function () {
 Route::get('/contact', function () {
     return view('contact');
 });
+
+Route::get('/quiz-chart/{user_id}', [QuizController::class, "showChart"]);

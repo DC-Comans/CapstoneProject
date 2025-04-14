@@ -8,6 +8,7 @@ body {
   html, body {
     max-width: 100%;
     overflow-x: hidden;
+    
   }
 
   /* Keep header at top */
@@ -22,6 +23,20 @@ body {
     width: 100%;
     flex-wrap: wrap; /* Allows items to break to next line on small screens */
   box-sizing: border-box; /* Ensures padding stays within width */
+  }
+
+
+  
+
+  footer {
+    background-color: aliceblue;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: black;
+    padding: 15px;
+    text-align: center;
+    bottom: 0;
+    position: static;
+    width: 100%;
   }
   
   .logo {
@@ -121,3 +136,41 @@ body {
     margin-left: 10px;
   }
   
+
+  /* Charts */
+
+  .chart-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .chart-wrapper-1 {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-top: 100px;
+    
+  }
+  
+  .chart-container {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .chart-container-1 {
+    width: 500px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  #CorrectText{
+    font-size: 200;
+  }

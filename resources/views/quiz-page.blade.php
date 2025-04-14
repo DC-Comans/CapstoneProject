@@ -9,7 +9,9 @@
 
         <x-layout>
             
-            
+            <h1 style="color: red">THIS IS THE QUIZ PAGE</h1>
+            <a href="quiz-chart"><h1 style="color: red">See results</h1></a>
+
             
               
         
