@@ -6,7 +6,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="/css/main.css">
 </head>
-<body>
+<body id="body1">
 <x-layout>
     <h2 style="text-align: center; color: black;">User {{ $userId }} – Last 3 Tests</h2>
   
@@ -78,7 +78,39 @@
         });
       </script>
       
-      <h4 id="CorrectText" style="text-align: center; color: black;">What you got right:</h4>
+      <h4 id="CorrectText" style="text-align: center; color: black;">Results:</h4>
+
+
+
+      <table class="table1" style="width: 90%; margin: auto; border-collapse: collapse;">
+        <thead>
+          <tr>
+            <th style="border: 1px solid #ccc; padding: 8px;">#</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Question</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Answer</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Correct Answer</th>
+            <th style="border: 1px solid #ccc; padding: 8px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($questions as $item)
+          <tr>
+            <td style="border: 1px solid #ccc; padding: 8px;">{{ $item['number'] }}</td>
+            <td style="border: 1px solid #ccc; padding: 8px;">{{ $item['question'] }}</td>
+            <td style="border: 1px solid #ccc; padding: 8px;">{{ $item['userAnswer'] }}</td>
+            <td style="border: 1px solid #ccc; padding: 8px;">{{ $item['correct'] }}</td>
+            <td style="border: 1px solid #ccc; padding: 8px;">
+              @if ($item['isCorrect'])
+                ✅
+              @else
+                ❌
+              @endif
+            </td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
+
 </x-layout>
   </body>
   

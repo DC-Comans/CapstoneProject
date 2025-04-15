@@ -18,6 +18,17 @@ class QuizController extends Controller
 public function showChart($userId)
 {
 
+
+    $questions = DB::table('quizzes')
+        ->where('user_id', $userId)
+        ->latest()
+        ->first();
+
+
+        
+
+
+
  // Get the latest test
  $latestTest = DB::table('results')
         ->where('user_id', $userId)
@@ -25,6 +36,24 @@ public function showChart($userId)
         ->first();
 
     $latestChart = null;
+
+
+    $questionSet = collect(range(1, 20))->map(function ($i) use ($questions, $latestTest) {
+
+        $question = $questions->{'question' . $i};
+    $userAnswer = $latestTest->{'givenanswer' . $i} ?? null;
+    $wasCorrect = $latestTest->{'answer' . $i} ?? null; // Should be "Yes" or "No"
+
+    return [
+        'number' => $i,
+        'question' => $questions->{'question' . $i},
+        'correct' => $questions->{'answer' . $i},
+        'userAnswer' => $userAnswer,
+        'isCorrect' => strtolower($wasCorrect) === 'yes',
+    ];
+})->filter(fn($q) => $q['question'] !== null);;
+
+
 
     if ($latestTest) {
         $answers = collect([
@@ -70,7 +99,8 @@ public function showChart($userId)
     return view('chart', [
         'userId' => $userId,
         'charts' => $charts,
-        'latestChart' => $latestChart
+        'latestChart' => $latestChart,
+        'questions' => $questionSet
     ]);
 
 

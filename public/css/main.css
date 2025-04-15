@@ -4,6 +4,16 @@ body {
     background-color: white;
     color: #fff;
   }
+
+
+  #body1{
+
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: white;
+    color: #fff;
+    padding-bottom: 120px;
+  }
   
   html, body {
     max-width: 100%;
@@ -35,7 +45,7 @@ body {
     padding: 15px;
     text-align: center;
     bottom: 0;
-    position: static;
+    position: fixed;
     width: 100%;
   }
   
@@ -173,4 +183,10 @@ body {
   
   #CorrectText{
     font-size: 200;
+  }
+
+
+  .table1{
+    color: black;
+    
   }
