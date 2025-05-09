@@ -5,12 +5,40 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
     public function quizPage(){
-        return view("quiz-page");
+        
+        if(Auth::check()){
+            return view("quiz-page");}
+
+            else{return view("sign-up");}
+        
+        
+    }
+
+
+
+    public function quizStart($userId){
+        
+        if(Auth::check()){
+            $questions = DB::table('quizzes')
+            ->where('user_id', $userId)
+            ->latest()
+            ->first();
+
+            if(!$questions){
+                return view("edit-quiz");
+            }
+            
+            
+            return view("quiz");}
+
+            else{return view("sign-up");}
+        
+        
     }
 
 

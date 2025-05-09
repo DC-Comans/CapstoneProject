@@ -9,12 +9,12 @@
 
         <x-layout>
 
-            <a href="take-quiz"><button class="btn login-btn" >Click here to take your latest quiz</button></a>
+            
 
             <button class="btn login-btn">Or here to edit it</button>
             
-            <h1 style="color: red">THIS IS THE QUIZ PAGE</h1>
-            <a href="quiz-chart"><h1 style="color: red">See results</h1></a>
+            <h1 style="color: red">YOUR QUIZ</h1>
+            
 
             
               

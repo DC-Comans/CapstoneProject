@@ -11,7 +11,8 @@
             <div class="container">
                 <div class="outer-box">
                 <div class="login-box">
-                  <form>
+                  <form method="POST" action="/sign-up">
+                    @csrf
                     <label for="username"><strong>Username:</strong></label>
                     <input type="text" id="username" name="username">
 
@@ -21,8 +22,8 @@
                     <label for="password"><strong>Password:</strong></label>
                     <input type="password" id="password" name="password">
 
-                    <label for="passwordCheck"><strong>Re-type Password:</strong></label>
-                    <input type="password" id="passwordCheck" name="passwordCheck">
+                    <label for="password_confirmation"><strong>Re-type Password:</strong></label>
+                    <input type="password" id="password_confirmation" name="password_confirmation">
             
                     <button type="submit" class="btn login-btn">Sign up</button>
                   </form>
@@ -30,7 +31,7 @@
             
                 <div class="signup-box">
                   <span>Already have an account? Just Login!</span>
-                  <a href="/"><button class="btn signup-btn">Login</button></a>
+                  <a href="/login"><button class="btn signup-btn">Login</button></a>
                 </div>
             </div>
               </div>

@@ -2,16 +2,23 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Quiz</title>
         <link rel="stylesheet" href="/css/main.css">
     </head>
     <body>
 
         <x-layout>
 
-            <p style="color: black">About us</p>
-            <p style="color: black">Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum </p>
+            
 
+            
+            
+            <h1 style="color: red">EDIT QUIZ</h1>
+            
+
+            
+              
+        
         </body>
-        </html>
-</x-layout>
+                </html>
+        </x-layout>

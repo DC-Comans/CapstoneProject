@@ -10,7 +10,8 @@
         <x-layout>
           
             
-            
+            <h1 style="color: black">What death is</h1>
+
               
         
         </body>
