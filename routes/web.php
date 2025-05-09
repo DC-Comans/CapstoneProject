@@ -25,7 +25,14 @@ Route::get('/profile', [UserController::class, "account"]);
 
 Route::get('/quiz', [QuizController::class, "quizPage"]);
 
-Route::get('/take-quiz/{user_id}', [QuizController::class, "quizStart"]);
+Route::get('/take-quiz/{userId}/{step?}', [QuizController::class, 'quizStart'])->name('quiz.take');
+
+
+Route::post('/submit-answer', [QuizController::class, 'submitAnswer']);
+
+Route::get('/edit-quiz/{user_id}', [QuizController::class, "editQuiz"]);
+
+Route::post('/submit-quiz', [QuizController::class, 'submitQuiz']);
 
 
 Route::get('/resources', function () {
@@ -37,3 +44,5 @@ Route::get('/contact', function () {
 });
 
 Route::get('/quiz-chart/{user_id}', [QuizController::class, "showChart"]);
+
+

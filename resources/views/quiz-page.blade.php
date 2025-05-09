@@ -9,12 +9,12 @@
 
         <x-layout>
 
-            <a href="take-quiz"><button class="btn login-btn" >Click here to take your latest quiz</button></a>
+            <a href="take-quiz/{{auth()->user()->id}}"><button class="btn login-btn" >Click here to take your latest quiz</button></a>
 
-            <button class="btn login-btn">Or here to edit it</button>
+            <a href="edit-quiz/{{auth()->user()->id}}"><button class="btn login-btn">Or here to edit it</button></a>
             
             <h1 style="color: red">THIS IS THE QUIZ PAGE</h1>
-            <a href="quiz-chart"><h1 style="color: red">See results</h1></a>
+            <a href="quiz-chart/{{auth()->user()->id}}"><h1 style="color: red">See results</h1></a>
 
             
               

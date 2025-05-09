@@ -8,7 +8,7 @@
 </head>
 <body id="body1">
 <x-layout>
-    <h2 style="text-align: center; color: black;">User {{ $userId }} – Last 3 Tests</h2>
+    <h2 style="text-align: center; color: black;">{{auth()->user()->username}} – Last 3 Tests</h2>
   
     <div class="chart-wrapper">
       @foreach ($charts as $index => $chart)
@@ -16,6 +16,11 @@
           <h4 style="text-align: center; color: black;">Test #{{ $chart['testNumber'] }}</h4>
           <canvas id="chart{{ $index }}"></canvas>
         </div>
+
+        @if (count($questions) > 0)
+        <h4 id="CorrectText" style="text-align: center; color: black;">Results:</h4>
+        <table class="table1" ...>...</table>
+      @endif
   
         <script>
           const ctx{{ $index }} = document.getElementById('chart{{ $index }}').getContext('2d');
@@ -45,10 +50,14 @@
 
     </div>
 
+    
     <div class="chart-wrapper-1">
+      
         <div class="chart-container-1">
+          <h4 style="text-align: center; color: black;">Latest Test</h4>
           <!--<h4 style="text-align: center; color: black;">Latest Test – Test #</h4> -->
           <canvas id="latestChartCanvas"></canvas>
+          
         </div>
       </div>
       

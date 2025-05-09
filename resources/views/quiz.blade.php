@@ -11,9 +11,27 @@
 
             
 
-            <button class="btn login-btn">Or here to edit it</button>
+            <h4 style="color: black">Question {{ $step + 1 }} of {{ $total }}</h4>
+
+            <h2 style="color: black">{{ $question }}</h2>
+
+            <form method="POST" action="/submit-answer">
+                @csrf
+                @foreach ($options as $option)
+                    <div>
+                        <label style="color: black">
+                            <input type="radio" name="selected" value="{{ $option }}" required>
+                            {{ $option }}
+                        </label>
+                    </div>
+                @endforeach
             
-            <h1 style="color: red">YOUR QUIZ</h1>
+                <input type="hidden" name="correct" value="{{ $correct }}">
+                <input type="hidden" name="step" value="{{ $step }}">
+            
+                <button type="submit">Next</button>
+            </form>
+            
             
 
             
