@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('username');
-            $table->date('DOB');
+            $table->date('DOB')->default('2000-01-01');
             $table->string('avatar')->nullable();
             $table->boolean('private')->default(0);
             //$table->foreign('likeduser')->references('id')->on('users');
