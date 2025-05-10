@@ -14,6 +14,8 @@
            
             <h2 style="color: black">Quiz Complete!</h2>
             <p style="color: green">Your score: {{ $score }} / {{ $total }} ({{ $percentage }}%)</p>
+
+            <h2 class="text-2xl font-bold text-center mt-4 italic animate-pulse" style="color: #3ae637;">{{ $message }}</h2>
             <a href="/quiz-chart/{{auth()->user()->id}}"><p>To compare previous results</p></a>
             
             <a href="/">Return Home</a>

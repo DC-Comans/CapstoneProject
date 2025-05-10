@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Quiz;
 use App\Models\Result;
+use App\Models\Answer;
 
 class QuizController extends Controller
 {
@@ -25,7 +26,7 @@ class QuizController extends Controller
 
     
 
-public function quizStart($userId, $step = 0)
+    public function quizStart($userId, $step = 0)
 {
     if (!Auth::check()) {
         return view('sign-up');
@@ -52,6 +53,44 @@ public function quizStart($userId, $step = 0)
         $score = session('score', 0);
         $percentage = round(($score / $total) * 100, 2);
 
+        
+
+        $messages = [];
+
+        if ($percentage >= 80) {
+            $messages = [
+                "You're a rockstar!",
+                "Amazing work — you're on fire!",
+                "Top marks!",
+                "You crushed it!",
+                "Master of knowledge!"
+            ];
+        } elseif ($percentage >= 60) {
+            $messages = [
+                "Nice effort!",
+                "You're getting there!",
+                "Solid performance!",
+                "Just a bit more polish"
+            ];
+        } elseif ($percentage >= 35) {
+            $messages = [
+                "Not bad! Keep studying",
+                "Progress is progress ",
+                "You're learning — don't stop!",
+                "Every step counts!"
+            ];
+        } else {
+            $messages = [
+                "It's okay to start slow!",
+                "Everyone starts somewhere!",
+                "Don't give up — try again!",
+                "Failure is the first step to success!"
+            ];
+        }
+
+        // Pick one random message
+        $finalMessage = $messages[array_rand($messages)];
+
         if (!session()->has('quiz_saved')) {
             // Determine next test number
             $latestTest = DB::table('results')
@@ -71,13 +110,26 @@ public function quizStart($userId, $step = 0)
             }
 
             // Save the result once
-            Result::create([
+            $result = Result::create([
                 'user_id' => $userId,
                 'TestNumber' => $nextTestNumber,
                 'result' => $percentage
             ]);
 
-            session(['quiz_saved' => true]); // prevent re-saving on refresh
+            // Save all answers from session
+            foreach (session('answers', []) as $a) {
+                Answer::create([
+                    'user_id' => $userId,
+                    'result_id' => $result->id,
+                    'question' => $a['question'],
+                    'correct_answer' => $a['correct_answer'],
+                    'given_answer' => $a['given_answer'],
+                    'is_correct' => $a['is_correct']
+                ]);
+            }
+
+            session(['quiz_saved' => true]);
+            session()->forget('answers'); // clear session answers
         }
 
         session()->forget('score'); // optional: clear score after use
@@ -86,8 +138,9 @@ public function quizStart($userId, $step = 0)
             'total' => $total,
             'score' => $score,
             'percentage' => $percentage,
+            'message' => $finalMessage
         ]);
-    }
+    } // 
 
     // Ongoing question logic
     $currentQuestion = $questions[$step];
@@ -125,6 +178,7 @@ public function quizStart($userId, $step = 0)
 
 
 
+
     public function submitAnswer(Request $request)
 {
     $selected = $request->input('selected');
@@ -138,6 +192,25 @@ public function quizStart($userId, $step = 0)
     // Store score in session or DB (this example uses session)
     $score = session('score', 0);
     session(['score' => $isCorrect ? $score + 1 : $score]);
+
+
+    // Get current question
+    $userId = Auth::id();
+    $question = DB::table('quizzes')
+        ->where('user_id', $userId)
+        ->skip($step)
+        ->take(1)
+        ->first();
+
+    // Store answer in session
+    $answers = session('answers', []);
+    $answers[] = [
+        'question' => $question->question ?? 'Unknown',
+        'correct_answer' => $correct,
+        'given_answer' => $selected,
+        'is_correct' => $isCorrect,
+    ];
+    session(['answers' => $answers]);
 
     return redirect()->route('quiz.take', ['userId' => $user, 'step' => $step + 1]);
 }
@@ -164,6 +237,8 @@ if (empty($questions) || empty($answers)) {
             'answer' => $answer,
         ]);
     }
+
+    
 
     return redirect('/quiz')->with('success', 'Quiz updated successfully!');
 }
@@ -194,33 +269,52 @@ if (empty($questions) || empty($answers)) {
 
     public function showChart($userId)
 {
-
-
-    if(Auth::id() != $userId){
+    if (Auth::id() != $userId) {
         return redirect("/");
     }
 
-
+    // Fetch recent test results
     $rawTests = DB::table('results')
-    ->where('user_id', $userId)
-    ->orderByDesc('TestNumber')
-    ->take(3)
-    ->get()
-    ->values(); // resets index to 0,1,2
+        ->where('user_id', $userId)
+        ->orderByDesc('TestNumber')
+        ->take(3)
+        ->get()
+        ->values(); // reset index to 0,1,2
 
     $charts = $rawTests->map(function ($result, $index) {
-    return [
-        'testNumber' => $index + 1, //
-        'labels' => ['Score', 'Remaining'],
-        'values' => [$result->result, 100 - $result->result]
-    ];
+        return [
+            'testNumber' => $index + 1,
+            'labels' => ['Score', 'Remaining'],
+            'values' => [$result->result, 100 - $result->result]
+        ];
+    });
+
+    // 🟢 Get the latest test
+    $latestTest = $rawTests->first();
+
+    // 🟢 Fetch question details from the `answers` table
+    $questions = [];
+
+    if ($latestTest) {
+        $answers = Answer::where('result_id', $latestTest->id)
+            ->get();
+
+        $questions = $answers->map(function ($a, $i) {
+            return [
+                'number' => $i + 1,
+                'question' => $a->question,
+                'userAnswer' => $a->given_answer,
+                'correct' => $a->correct_answer,
+                'isCorrect' => $a->is_correct,
+            ];
         });
+    }
 
     return view('chart', [
         'userId' => $userId,
         'charts' => $charts,
         'latestChart' => $charts->first(),
-        'questions' => [] // send an empty array for now
+        'questions' => $questions
     ]);
 }
 
