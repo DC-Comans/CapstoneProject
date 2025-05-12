@@ -46,14 +46,14 @@
         @endif
 
         <!-- Options or Title-only Section -->
-@if ($category === 's4' || $category === 's5' || $category === 'yn' || $category === 'dd')
+@if ($category === 's4' || $category === 's5' || $category === 's7' || $category === 'yn' || $category === 'dd')
   <!-- Questions with inputs -->
   <form method="POST" action="/submit-answer">
     @csrf
     <input type="hidden" name="correct" value="{{ $correct }}">
     <input type="hidden" name="step" value="{{ $step }}">
 
-    @if ($category === 's4' || $category === 's5')
+    @if ($category === 's4' || $category === 's5' || $category === 's7')
       <!-- Scale with labels -->
       <div class="flex flex-col gap-2">
         @foreach ($options as $index => $label)
@@ -78,16 +78,23 @@
         @endforeach
       </div>
     @elseif ($category === 'dd')
-      <!-- Dropdown -->
-      <div style="color: black">
-        <select name="selected" required class="w-full border px-4 py-2 rounded">
-          <option disabled selected value="">Choose one...</option>
-          @foreach ($options as $option)
-            <option value="{{ $option }}">{{ $option }}</option>
-          @endforeach
-        </select>
-      </div>
-    @endif
+<!-- Dropdown with "Other (please specify)" -->
+<div style="color: black">
+  <select name="selected" id="dropdown" required class="w-full border px-4 py-2 rounded" onchange="handleDropdownChange(this)">
+    <option disabled selected value="">Choose one...</option>
+    @foreach ($options as $option)
+      <option value="{{ $option }}">{{ $option }}</option>
+    @endforeach
+  </select>
+
+  <!-- Other text input (initially hidden) -->
+  <div id="otherInputWrapper" class="mt-4 hidden">
+    <label for="otherText" class="block text-sm font-medium text-gray-700 mb-1">Please specify:</label>
+    <input type="text" id="otherText" name="otherText" class="w-full border px-4 py-2 rounded" placeholder="Enter your answer here">
+  </div>
+</div>
+@endif
+
 
     <div class="mt-6 flex justify-between">
       <button type="button" onclick="window.history.back()" class="bg-red-200 text-red-800 px-4 py-2 rounded">← Last</button>
@@ -118,6 +125,22 @@
     </div>
   </div>
   </x-layout>
+
+  <script>
+function handleDropdownChange(select) {
+  const otherInput = document.getElementById('otherInputWrapper');
+  const otherText = document.getElementById('otherText');
+  if (select.value === 'Other (please specify)') {
+    otherInput.classList.remove('hidden');
+    otherText.setAttribute('required', 'required');
+  } else {
+    otherInput.classList.add('hidden');
+    otherText.removeAttribute('required');
+    otherText.value = '';
+  }
+}
+</script>
+
 </body>
 
 </html>

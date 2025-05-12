@@ -247,7 +247,7 @@ foreach ($areaGroups as $area => $data) {
 
 
     // Determine options based on question category
-if ($currentQuestion->category === 'dd' || $currentQuestion->category === 's4' || $currentQuestion->category === 's5') {
+if ($currentQuestion->category === 'dd' || $currentQuestion->category === 's4' || $currentQuestion->category === 's5' || $currentQuestion->category === 's7') {
     $options = collect(json_decode($currentQuestion->options ?? '[]'));
 } elseif ($currentQuestion->category === 'yn') {
     $options = collect(['Yes', 'No']);
@@ -276,6 +276,9 @@ if ($currentQuestion->category === 'dd' || $currentQuestion->category === 's4' |
     public function submitAnswer(Request $request)
 {
     $selected = $request->input('selected');
+    if ($selected === 'Other (please specify)') {
+    $selected = $request->input('otherText');
+}
     $correct = $request->input('correct');
     $step = (int) $request->input('step');
 
