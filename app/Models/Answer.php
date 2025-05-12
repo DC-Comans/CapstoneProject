@@ -12,6 +12,7 @@ class Answer extends Model
     protected $fillable = [
         'user_id',
         'result_id',
+        'quiz_id',
         'question',
         'correct_answer',
         'given_answer',
@@ -28,4 +29,10 @@ class Answer extends Model
     {
         return $this->belongsTo(Result::class);
     }
+   
+    public function quiz()
+    {
+    return $this->belongsTo(Quiz::class);
+    }
+
 }

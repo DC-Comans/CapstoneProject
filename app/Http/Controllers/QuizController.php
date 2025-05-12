@@ -18,8 +18,6 @@ class QuizController extends Controller
             return view("quiz-page");}
 
             else{return view("sign-up");}
-        
-        
     }
 
 
@@ -29,151 +27,247 @@ class QuizController extends Controller
     public function quizStart($userId, $step = 0)
 {
     if (!Auth::check()) {
-        return view('sign-up');
+        return redirect('/');
     }
 
-    if ($step == 0) {
-        session(['score' => 0]);
-        session()->forget('quiz_saved'); // Reset the save-flag at the start
+    if (Auth::id() != $userId) {
+        return redirect()->back();
     }
 
-    $questions = DB::table('quizzes')
-        ->where('user_id', $userId)
-        ->get();
+    $questions = DB::table('quizzes')->get();
 
     if ($questions->isEmpty()) {
-        return view("edit-quiz")->with('failure', 'Please add questions first.');
+        return redirect("quiz")->with('failure', 'Questions are unavailable.');
     }
 
-    $total = $questions->count();
+    // Reset quiz state at the beginning
+    if ($step == 0) {
+        session(['score' => 0]);
+        session()->forget('quiz_saved');
+        session()->forget('answers');
+    }
 
-    // ✅ QUIZ FINISHED — save result here once
+    
+   $total = $questions->where('category', '!=', 't')->count();
+
+    // ✅ QUIZ COMPLETED
     if ($step >= $total) {
-        $userId = Auth::id();
         $score = session('score', 0);
         $percentage = round(($score / $total) * 100, 2);
 
-        
-
-        $messages = [];
-
-        if ($percentage >= 80) {
-            $messages = [
+        // Motivational message logic
+        $messages = match (true) {
+            $percentage >= 80 => [
                 "You're a rockstar!",
                 "Amazing work — you're on fire!",
                 "Top marks!",
                 "You crushed it!",
                 "Master of knowledge!"
-            ];
-        } elseif ($percentage >= 60) {
-            $messages = [
+            ],
+            $percentage >= 60 => [
                 "Nice effort!",
                 "You're getting there!",
                 "Solid performance!",
                 "Just a bit more polish"
-            ];
-        } elseif ($percentage >= 35) {
-            $messages = [
+            ],
+            $percentage >= 35 => [
                 "Not bad! Keep studying",
-                "Progress is progress ",
+                "Progress is progress",
                 "You're learning — don't stop!",
                 "Every step counts!"
-            ];
-        } else {
-            $messages = [
+            ],
+            default => [
                 "It's okay to start slow!",
                 "Everyone starts somewhere!",
                 "Don't give up — try again!",
                 "Failure is the first step to success!"
-            ];
-        }
-
-        // Pick one random message
+            ],
+        };
         $finalMessage = $messages[array_rand($messages)];
 
+        // Get stored answers for rendering and possibly saving
+        $sessionAnswers = session('answers', []);
+
+
+
+
+
+
+
+
+        // Save results only once
         if (!session()->has('quiz_saved')) {
             // Determine next test number
-            $latestTest = DB::table('results')
-                ->where('user_id', $userId)
+            $latestTest = Result::where('user_id', $userId)
                 ->orderByDesc('TestNumber')
                 ->first();
 
             $nextTestNumber = $latestTest ? $latestTest->TestNumber + 1 : 1;
 
-            // Keep only latest 2 so we can add a 3rd
+            // Delete oldest if 3 already exist
             $existingResults = Result::where('user_id', $userId)
                 ->orderByDesc('created_at')
                 ->get();
 
             if ($existingResults->count() >= 3) {
-                $existingResults->last()->delete(); // delete oldest
+                $existingResults->last()->delete();
             }
 
-            // Save the result once
+            // Save the result
             $result = Result::create([
                 'user_id' => $userId,
                 'TestNumber' => $nextTestNumber,
                 'result' => $percentage
             ]);
 
-            // Save all answers from session
-            foreach (session('answers', []) as $a) {
+            // Save each answer
+            foreach ($sessionAnswers as $a) {
                 Answer::create([
-                    'user_id' => $userId,
-                    'result_id' => $result->id,
-                    'question' => $a['question'],
-                    'correct_answer' => $a['correct_answer'],
-                    'given_answer' => $a['given_answer'],
-                    'is_correct' => $a['is_correct']
-                ]);
+            'user_id' => $userId,
+            'result_id' => $result->id,
+            'question' => $a['question'],
+            'given_answer' => $a['given_answer'],
+            'quiz_id' => $a['quiz_id'] ?? null
+            ]);
+
             }
 
             session(['quiz_saved' => true]);
-            session()->forget('answers'); // clear session answers
+            session()->forget('answers');
         }
 
-        session()->forget('score'); // optional: clear score after use
+        // Convert answers to display format
+        $questions = collect($sessionAnswers)->map(function ($a, $i) {
+            return [
+                'number' => $i + 1,
+                'question' => $a['question'],
+                'userAnswer' => $a['given_answer'],
+            ];
+        });
+
+        session()->forget('score'); // Optional
+
+        // Group answers by area and calculate average score per area
+// Map quiz_id to area from DB
+$quizAreas = DB::table('quizzes')->pluck('area', 'id');
+
+// Group answers by area (via quiz_id)
+$areaGroups = collect($sessionAnswers)
+    ->filter(fn($a) => isset($a['quiz_id']) && isset($quizAreas[$a['quiz_id']]))
+    ->groupBy(fn($a) => $quizAreas[$a['quiz_id']])
+    ->map(function ($group, $area) {
+        $numericScores = collect($group)->pluck('given_answer')
+            ->map(fn($val) => is_numeric($val) ? floatval($val) : null)
+            ->filter();
+
+        return [
+            'area' => $area,
+            'average' => $numericScores->avg(),
+        ];
+    });
+
+
+// Output mapping from hardcoded PHP array (originally from CSV)
+$outputDefinitions = [
+    'Talking Support' => [
+    'low' => 4.24,
+        'high' => 6.68,
+        'Low' => [
+            'range' => 'Lower',
+            'meaning' => 'Your community connection may need strengthening.',
+            'suggestion' => 'Consider joining local support or interest groups.'
+        ],
+        'Similar' => [
+            'range' => 'Similar',
+            'meaning' => 'Your experience is similar to others in your community.',
+            'suggestion' => 'Stay engaged and continue contributing.'
+        ],
+        'High' => [
+            'range' => 'Higher',
+            'meaning' => "You're strongly connected with your community.",
+            'suggestion' => 'Consider leading or mentoring in your area.'
+        ]
+    ],
+    //'Hands-on Support' => [...],
+    'Community Support 1' => [
+        'low' => 2.91,
+        'high' => 5.39,
+        'Low' => [
+            'range' => 'Lower',
+            'meaning' => 'Your community connection may need strengthening.',
+            'suggestion' => 'Consider joining local support or interest groups.'
+        ],
+        'Similar' => [
+            'range' => 'Similar',
+            'meaning' => 'Your experience is similar to others in your community.',
+            'suggestion' => 'Stay engaged and continue contributing.'
+        ],
+        'High' => [
+            'range' => 'Higher',
+            'meaning' => 'You’re strongly connected with your community.',
+            'suggestion' => 'Consider leading or mentoring in your area.'
+        ]
+    ]
+];
+
+
+$areaSummaries = [];
+
+foreach ($areaGroups as $area => $data) {
+    if (!isset($outputDefinitions[$area])) continue;
+
+    $def = $outputDefinitions[$area];
+    $score = $data['average'] ?? 0;
+    $bucket = 'Low';
+    if ($score >= $def['high']) $bucket = 'High';
+    elseif ($score >= $def['low']) $bucket = 'Similar';
+
+    $areaSummaries[] = [
+        'area' => $area,
+        'average' => number_format($score, 2),
+        'range' => $def[$bucket]['range'],
+        'meaning' => $def[$bucket]['meaning'],
+        'suggestion' => $def[$bucket]['suggestion']
+    ];
+}
+
 
         return view('quiz-complete', [
-            'total' => $total,
-            'score' => $score,
-            'percentage' => $percentage,
-            'message' => $finalMessage
-        ]);
-    } // 
-
-    // Ongoing question logic
-    $currentQuestion = $questions[$step];
-
-    $otherAnswers = $questions
-        ->where('id', '!=', $currentQuestion->id)
-        ->pluck('answer')
-        ->shuffle()
-        ->take(3)
-        ->toArray();
-
-    $defaultDistractors = ['Grieving', 'Being polite', 'Assurance', 'Cremation'];
-
-    while (count($otherAnswers) < 3) {
-        $filler = collect($defaultDistractors)
-            ->diff($otherAnswers)
-            ->diff([$currentQuestion->answer])
-            ->random();
-
-        $otherAnswers[] = $filler;
+        'total' => $total,
+        'score' => $score,
+        'percentage' => $percentage,
+        'message' => $finalMessage,
+        'questions' => $questions,
+        'areaSummaries' => $areaSummaries
+    ]);
     }
 
-    $options = collect($otherAnswers)
-        ->push($currentQuestion->answer)
-        ->shuffle();
+    // ✅ ONGOING QUESTION
+    $currentQuestion = $questions[$step];
+
+
+    // Determine options based on question category
+if ($currentQuestion->category === 'dd' || $currentQuestion->category === 's4' || $currentQuestion->category === 's5') {
+    $options = collect(json_decode($currentQuestion->options ?? '[]'));
+} elseif ($currentQuestion->category === 'yn') {
+    $options = collect(['Yes', 'No']);
+} else {
+    $options = collect([]);
+}
+
+
+
+
 
     return view('quiz', [
-        'question' => $currentQuestion->question,
-        'correct' => $currentQuestion->answer,
-        'options' => $options,
-        'step' => $step,
-        'total' => $total
-    ]);
+    'question' => $currentQuestion->question,
+    'correct' => $currentQuestion->answer,
+    'options' => $options,
+    'step' => $step,
+    'total' => $total,
+    'category' => $currentQuestion->category 
+]);
+
 }
 
 
@@ -195,21 +289,29 @@ class QuizController extends Controller
 
 
     // Get current question
-    $userId = Auth::id();
+    //$userId = Auth::id();
     $question = DB::table('quizzes')
-        ->where('user_id', $userId)
-        ->skip($step)
-        ->take(1)
-        ->first();
+    ->skip($step)
+    ->take(1)
+    ->first();
+
+    // Skip title-only questions
+if ($question && $question->category === 't') {
+    return redirect()->route('quiz.take', [
+        'userId' => Auth::id(),
+        'step' => $step + 1
+    ]);
+}
 
     // Store answer in session
     $answers = session('answers', []);
     $answers[] = [
-        'question' => $question->question ?? 'Unknown',
-        'correct_answer' => $correct,
-        'given_answer' => $selected,
-        'is_correct' => $isCorrect,
-    ];
+    'question' => $question->question ?? 'Unknown',
+    'given_answer' => $selected,
+    'area' => $question->area ?? null,
+    'quiz_id' => $question->id ?? null,
+];
+
     session(['answers' => $answers]);
 
     return redirect()->route('quiz.take', ['userId' => $user, 'step' => $step + 1]);
@@ -289,10 +391,10 @@ if (empty($questions) || empty($answers)) {
         ];
     });
 
-    // 🟢 Get the latest test
+    
     $latestTest = $rawTests->first();
 
-    // 🟢 Fetch question details from the `answers` table
+    
     $questions = [];
 
     if ($latestTest) {
@@ -304,8 +406,7 @@ if (empty($questions) || empty($answers)) {
                 'number' => $i + 1,
                 'question' => $a->question,
                 'userAnswer' => $a->given_answer,
-                'correct' => $a->correct_answer,
-                'isCorrect' => $a->is_correct,
+                
             ];
         });
     }

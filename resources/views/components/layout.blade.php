@@ -8,8 +8,14 @@
         <li><a href="/about">About Us</a></li>
         <li><a href="/contact">Contact</a></li>
         @auth
+
+        @if(auth()->user()->isAdmin == 1)
+        <li><a href="/admin">Admin</a></li>
+        @endif
+
         <li><a href="/account/{{auth()->user()->id}}">Account</a></li>
         <li><a href="/logout">Log Out</a></li>
+
 
         @endauth
       </ul>

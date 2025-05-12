@@ -41,7 +41,7 @@
       @endforeach
     </div>
     
-    {{-- ✅ Results go here — outside the chart loop --}}
+    {{--  Results go here — outside the chart loop --}}
     @if (count($questions) > 0)
       <h4 id="CorrectText" style="text-align: center; color: black; margin-top: 2rem;">Results:</h4>
       <table class="table1" style="width: 90%; margin: auto; border-collapse: collapse;">

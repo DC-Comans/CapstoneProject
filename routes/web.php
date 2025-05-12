@@ -25,13 +25,17 @@ Route::post('/change-password/{user_id}', [UserController::class, "changePasswor
 Route::get('/delete-account/{user_id}', [UserController::class, "deleteAccountScreen"]);
 Route::post('/delete-account/{user_id}', [UserController::class, "deleteAccount"]);
 
+//Admin
+Route::get('/admin', [UserController::class, "adminScreen"]);
+Route::get('/edit-quiz/{user_id}', [QuizController::class, "editQuiz"]);
+Route::post('/submit-quiz', [QuizController::class, 'submitQuiz']);
+
 
 //Quizzes
 Route::get('/quiz', [QuizController::class, "quizPage"]);
 Route::get('/take-quiz/{userId}/{step?}', [QuizController::class, 'quizStart'])->name('quiz.take');
 Route::post('/submit-answer', [QuizController::class, 'submitAnswer']);
-Route::get('/edit-quiz/{user_id}', [QuizController::class, "editQuiz"]);
-Route::post('/submit-quiz', [QuizController::class, 'submitQuiz']);
+
 Route::get('/quiz-chart/{user_id}', [QuizController::class, "showChart"]);
 
 //Resources

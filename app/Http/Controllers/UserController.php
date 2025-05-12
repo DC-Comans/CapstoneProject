@@ -393,5 +393,38 @@ public function logout(){
 
 
 
+//ADMIN
+public function adminScreen() {
+        if(!Auth::check()){
+            return redirect('/');}
+
+        if(!Auth::user()->isAdmin){
+            return redirect('/');}
+
+        if(Auth::user()->isAdmin == 1){
+            $users = DB::table('users')
+            //->where('user_id', $userId)
+            ->get();
+            $total = $users->count();
+
+            $totalEdited = DB::table('users')
+            ->where('isAdmin', 0)
+            ->get()->count();
+
+            $averageScore = DB::table('results')->avg('result');
+
+            $averageScore = round(DB::table('results')->avg('result'), 2);
+            
+        
+        
+        
+            return view('admin', ['users' => $total, "total" => $total, "totalEdited" => $totalEdited, "averageScore" => $averageScore]);}
+
+        else{
+             return redirect('/');
+        }
+    
+    }
+
 
 }

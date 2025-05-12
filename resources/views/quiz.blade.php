@@ -41,35 +41,73 @@
         </div>
 
         <!-- Question -->
+        @if ($category !== 't')
         <h2 style="color: black" class="text-2xl font-bold mb-6">{{ $question }}</h2>
+        @endif
 
-        <!-- Options -->
-        <form method="POST" action="/submit-answer">
-          @csrf
-          <input type="hidden" name="correct" value="{{ $correct }}">
-          <input type="hidden" name="step" value="{{ $step }}">
+        <!-- Options or Title-only Section -->
+@if ($category === 's4' || $category === 's5' || $category === 'yn' || $category === 'dd')
+  <!-- Questions with inputs -->
+  <form method="POST" action="/submit-answer">
+    @csrf
+    <input type="hidden" name="correct" value="{{ $correct }}">
+    <input type="hidden" name="step" value="{{ $step }}">
 
-          @php
-            //$shapes = ['▲', '■', '●', '★'];
-           // shuffle($shapes);
-          @endphp
-
-          @foreach ($options as $index => $option)
-          <label class="option-block bg-{{ ['red-100', 'green-100', 'blue-100', 'purple-100'][$index % 4] }}
-          text-black peer-checked:bg-{{ ['red-200', 'green-200', 'blue-200', 'purple-200'][$index % 4] }}
-          peer-checked:translate-y-1 peer-checked:scale-[1.02] transition-all duration-200 ease-in-out">
-              <input type="radio" name="selected" value="{{ $option }}" class="hidden peer" required>
-              <span class="peer-checked:text-lg peer-checked:font-semibold transition-all duration-200">
-                {{ $option }}
-              </span>
-            </label>
+    @if ($category === 's4' || $category === 's5')
+      <!-- Scale with labels -->
+      <div class="flex flex-col gap-2">
+        @foreach ($options as $index => $label)
+          <label class="option-block bg-gray-100 text-black">
+            <input type="radio" name="selected" value="{{ $index + 1 }}" class="hidden peer" required>
+            <span class="peer-checked:text-lg peer-checked:font-semibold">
+              {{ $index + 1 }}{{ $label ? ' – ' . $label : '' }}
+            </span>
+          </label>
+        @endforeach
+      </div>
+    @elseif ($category === 'yn')
+      <!-- Yes/No -->
+      <div class="flex flex-col gap-2">
+        @foreach (['Yes', 'No'] as $option)
+          <label class="option-block bg-gray-100 text-black">
+            <input type="radio" name="selected" value="{{ $option }}" class="hidden peer" required>
+            <span class="peer-checked:text-lg peer-checked:font-semibold">
+              {{ $option }}
+            </span>
+          </label>
+        @endforeach
+      </div>
+    @elseif ($category === 'dd')
+      <!-- Dropdown -->
+      <div style="color: black">
+        <select name="selected" required class="w-full border px-4 py-2 rounded">
+          <option disabled selected value="">Choose one...</option>
+          @foreach ($options as $option)
+            <option value="{{ $option }}">{{ $option }}</option>
           @endforeach
+        </select>
+      </div>
+    @endif
 
-          <div class="mt-6 flex justify-between">
-            <button type="button" onclick="window.history.back()" class="bg-red-200 text-red-800 px-4 py-2 rounded">← Last</button>
-            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">Next →</button>
-          </div>
-        </form>
+    <div class="mt-6 flex justify-between">
+      <button type="button" onclick="window.history.back()" class="bg-red-200 text-red-800 px-4 py-2 rounded">← Last</button>
+      <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">Next →</button>
+    </div>
+  </form>
+@elseif ($category === 't')
+  <!-- Title-only step (no form) -->
+  <div style="color: black; font-weight: bold; font-size: 20px; text-align: center; margin-top: 40px;">
+      {{ $question }}
+  </div>
+  <p style="text-align: center; margin-top: 20px; color: black;">Press next to continue.</p>
+
+  <div class="mt-6 flex justify-between">
+    <button type="button" onclick="window.history.back()" class="bg-red-200 text-red-800 px-4 py-2 rounded">← Last</button>
+    <a href="{{ route('quiz.take', ['userId' => Auth::id(), 'step' => $step + 1]) }}" class="bg-red-600 text-white px-4 py-2 rounded">Next →</a>
+  </div>
+@endif
+
+
       </div>
 
       <!-- Image -->

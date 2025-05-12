@@ -13,4 +13,6 @@ protected $fillable = [
     'user_id',
     'question',
     'answer',
+    'area',
+    'category'
 ];}
