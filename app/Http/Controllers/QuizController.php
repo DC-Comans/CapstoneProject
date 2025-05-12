@@ -167,47 +167,207 @@ $areaGroups = collect($sessionAnswers)
     });
 
 
-// Output mapping from hardcoded PHP array (originally from CSV)
+//Outputs
 $outputDefinitions = [
     'Talking Support' => [
     'low' => 4.24,
         'high' => 6.68,
         'Low' => [
             'range' => 'Lower',
-            'meaning' => 'Your community connection may need strengthening.',
-            'suggestion' => 'Consider joining local support or interest groups.'
+            'how you scored' => 'You scored lower than most people when it comes to talking about death and dying.',
+            'meaning' => 'You might not feel very confident talking about death yet—and that’s completely okay.',
+            'suggestion' => 'Try joining a group or workshop where people talk openly about end-of-life topics. It’s a great way to build comfort.'
         ],
         'Similar' => [
             'range' => 'Similar',
-            'meaning' => 'Your experience is similar to others in your community.',
-            'suggestion' => 'Stay engaged and continue contributing.'
+            'how you scored' => 'Your score is about the same as most people’s.',
+            'meaning' => "You're about as comfortable talking about death as most people. That’s a solid place to be.",
+            'suggestion' => 'Keep having open conversations when the opportunity comes up—it helps create a more supportive space for everyone.'
         ],
         'High' => [
             'range' => 'Higher',
-            'meaning' => "You're strongly connected with your community.",
-            'suggestion' => 'Consider leading or mentoring in your area.'
+            'how you scored' => 'You scored higher than most people in talking about death and dying.',
+            'meaning' => 'You seem really comfortable talking about end-of-life matters, which is a real strength.',
+            'suggestion' => 'Use that comfort to gently support others who may find these conversations difficult. You can help make these talks feel safer.'
         ]
     ],
-    //'Hands-on Support' => [...],
+    'Hands-on Support' => [
+        'low' => 3.35,
+        'high' => 5.89,
+        'Low' => [
+            'range' => 'Lower',
+            'how you scored' => 'You scored lower than others in hands-on care.',
+            'meaning' => 'You may not have had much experience helping someone physically at the end of life. That’s very common.',
+            'suggestion' => 'You could look into volunteering, or even just learn basic care skills—it can help build confidence over time.'
+        ],
+        'Similar' => [
+            'range' => 'Similar',
+            'how you scored' => 'Your score is in line with the average when it comes to hands-on support.',
+            'meaning' => 'You’ve had some hands-on experience, about the same as most people.',
+            'suggestion' => 'Share what you’ve learned, and look for chances to build on your skills when you feel ready.'
+        ],
+        'High' => [
+            'range' => 'Higher',
+            'how you scored' => 'You scored higher than most people in hands-on support.',
+            'meaning' => 'You’ve clearly had experience helping someone directly, and that’s really valuable.',
+            'suggestion' => 'Consider mentoring others or getting involved in your community’s end-of-life care efforts. Your experience can make a difference.'
+        ]
+        ],
     'Community Support 1' => [
         'low' => 2.91,
         'high' => 5.39,
         'Low' => [
             'range' => 'Lower',
-            'meaning' => 'Your community connection may need strengthening.',
-            'suggestion' => 'Consider joining local support or interest groups.'
+            'how you scored' => 'You scored lower than others in feeling supported by your community.',
+            'meaning' => 'You might feel like your community doesn’t offer much support around death and dying.',
+            'suggestion' => 'Think about ways you can connect with others—there may be more support out there than it seems.'
         ],
         'Similar' => [
             'range' => 'Similar',
-            'meaning' => 'Your experience is similar to others in your community.',
-            'suggestion' => 'Stay engaged and continue contributing.'
+            'how you scored' => 'Your score is typical when it comes to perceived community support.',
+            'meaning' => 'Your experience with community support is similar to most people’s.',
+            'suggestion' => 'Look for ways to strengthen those ties—community can be a big help during difficult times.'
         ],
         'High' => [
             'range' => 'Higher',
-            'meaning' => 'You’re strongly connected with your community.',
-            'suggestion' => 'Consider leading or mentoring in your area.'
+            'how you scored' => 'You scored higher than most in community support.',
+            'meaning' => 'You feel like your community is pretty supportive, which is wonderful.',
+            'suggestion' => 'Help keep that support going by getting involved and welcoming others in.'
+        ]
+    ],
+    'Community Support 2' => [
+        'low' => 3.88,
+        'high' => 6.24,
+        'Low' => [
+            'range' => 'Lower',
+            'how you scored' => 'You scored lower in how engaged your community feels around end-of-life care.',
+            'meaning' => 'It might feel like your community isn’t very involved in end-of-life care.',
+            'suggestion' => 'You could explore local initiatives or even start conversations that help get more people engaged.'
+        ],
+        'Similar' => [
+            'range' => 'Similar',
+            'how you scored' => 'Your community engagement score is similar to most people’s.',
+            'meaning' => 'Your community’s involvement seems about average.',
+            'suggestion' => 'Keep encouraging participation—it helps everyone feel less alone.'
+        ],
+        'High' => [
+            'range' => 'Higher',
+            'how you scored' => 'You scored higher than others in community engagement.',
+            'meaning' => 'You feel your community really steps up when it comes to end-of-life care.',
+            'suggestion' => 'You can help others feel confident joining in too—your example can inspire more engagement.'
+        ]
+    ],
+    'Experience' => [
+        'low' => 4.75,
+        'high' => 7.05,
+        'Low' => [
+            'range' => 'Lower',
+            'how you scored' => 'You scored lower than others in experience with death and dying.',
+            'meaning' => 'You may not have had many personal or professional experiences with death or dying.',
+            'suggestion' => "Consider listening to others' stories, or gently reflect on your own feelings. That’s a good starting point."
+        ],
+        'Similar' => [
+            'range' => 'Similar',
+            'how you scored' => 'Your experience score is about average.',
+            'meaning' => 'Your experiences are about average—enough to give you a sense of what death and dying can be like.',
+            'suggestion' => 'Stay open to learning from your own experiences and those around you. It builds wisdom.'
+        ],
+        'High' => [
+            'range' => 'Higher',
+            'how you scored' => 'You scored higher than others in experience.',
+            'meaning' => 'You’ve had more exposure to death and dying than most. That gives you valuable perspective.',
+            'suggestion' => 'You might find yourself naturally supporting others—your lived experience is a real asset.'
+        ]
+    ],
+    'Knowledge' => [
+        'low' => 2.5,
+        'high' => 5.08,
+        'Low' => [
+            'range' => 'Lower',
+            'how you scored' => 'You scored lower than others in death-related knowledge.',
+            'meaning' => 'You might not feel very informed about end-of-life care or services right now.',
+            'suggestion' => 'Learning even just a bit more—like what options exist—can help you feel more prepared and confident.'
+        ],
+        'Similar' => [
+            'range' => 'Similar',
+            'how you scored' => 'Your knowledge score is about the same as others’.',
+            'meaning' => 'You’ve got a good, solid base of knowledge—enough to understand what’s going on.',
+            'suggestion' => 'Keep asking questions and exploring. It’ll help you and those you care about.'
+        ],
+        'High' => [
+            'range' => 'Higher',
+            'how you scored' => 'You scored higher than most people in knowledge about end-of-life matters.',
+            'meaning' => 'You know quite a lot about death-related matters. That’s a powerful tool.',
+            'suggestion' => 'Consider helping others understand what you’ve learned—many people are looking for someone who can guide them.'
+        ]
+    ],
+    'Community (Overall)' => [
+        'low' => 3.5,
+        'high' => 5.70,
+        'Low' => [
+            'range' => 'Lower',
+            'how you scored' => 'You scored lower than others overall in community-related support.',
+            'meaning' => 'You might not feel very supported by your community around death-related matters.',
+            'suggestion' => 'See if there are community groups or events that can help build that support. Small actions make a big difference.'
+        ],
+        'Similar' => [
+            'range' => 'Similar',
+            'how you scored' => 'Your overall community score is similar to others’.',
+            'meaning' => 'Your sense of community support is about the same as others’.',
+            'suggestion' => 'Keep showing up and being part of the conversation—it helps the whole community grow stronger.'
+        ],
+        'High' => [
+            'range' => 'Higher',
+            'how you scored' => 'You scored higher than others in overall community support.',
+            'meaning' => 'You see your community as supportive and engaged around dying and grieving. That’s a real strength.',
+            'suggestion' => 'Share what’s working—others might be looking for ideas to build similar support in their own communities.'
+        ]
+    ],
+    'Practical Knowledge (Overall)' => [
+        'low' => 3.94,
+        'high' => 6.14,
+        'Low' => [
+            'range' => 'Lower',
+            'how you scored' => 'You scored lower than others in overall practical knowledge.',
+            'meaning' => 'You might not feel super confident supporting someone through dying yet, and that’s totally normal.',
+            'suggestion' => 'Start small—maybe offer practical help to someone or learn more about what’s involved in end-of-life care.'
+        ],
+        'Similar' => [
+            'range' => 'Similar',
+            'how you scored' => 'Your score is similar to others’ in practical knowledge.',
+            'meaning' => 'You’ve got a solid base of experience, right in line with others.',
+            'suggestion' => 'Keep building on what you know, and don’t hesitate to step in when you see someone needs support.'
+        ],
+        'High' => [
+            'range' => 'Higher',
+            'how you scored' => 'You scored higher than most in practical knowledge.',
+            'meaning' => 'You’ve got strong practical knowledge. You know what to do and how to be there for someone.',
+            'suggestion' => 'Think about sharing what you know—others could really benefit from your experience.'
+        ]
+    ],
+    'Death Literacy Index (Overall)' => [
+        'low' => 3.86,
+        'high' => 5.8,
+        'Low' => [
+            'range' => 'Lower',
+            'how you scored' => 'You scored lower than others on the overall Death Literacy Index.',
+            'meaning' => 'You may not feel very comfortable or knowledgeable about death yet, but that can change with time.',
+            'suggestion' => 'Start with one step—talk to someone, read something, or reflect on what death means to you. It all adds up.'
+        ],
+        'Similar' => [
+            'range' => 'Similar',
+            'how you scored' => 'Your score is about average across all areas of death literacy.',
+            'meaning' => 'You’re in a similar place to most people—there’s a good base, and room to grow.',
+            'suggestion' => 'Keep learning, talking, and staying open—it’s a journey that grows with you.'
+        ],
+        'High' => [
+            'range' => 'Higher',
+            'how you scored' => 'You scored higher than most people on the Death Literacy Index.',
+            'meaning' => 'You seem to have a strong level of comfort, knowledge, and experience. That’s a real gift.',
+            'suggestion' => 'Think about how you can support others on their journey—you have a lot to offer.'
         ]
     ]
+
 ];
 
 
