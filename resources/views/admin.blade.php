@@ -9,16 +9,43 @@
 
         <x-layout>
             
-            <h1 style="color:black">ADMIN SCREEN</h1>
+            <h1 style="color: black">Admin Dashboard</h1>
+            <p style="color: black">Welcome back, {{ Auth::user()->username }}</p>
 
             <div class="container mx-auto p-4 " style="color: black">
                 
           
                 <p>Total users: {{$total}}</p>
                 <p>Non-staff users: {{$totalEdited}} </p>
-                <p>Average test score: {{$averageScore}}%</p> 
-            
-          
+                <p>Average scores:</p> <br>
+                @foreach ($areaSummaries as $summary)
+                <p>{{ $summary['area'] }}: {{ $summary['average'] }}</p>
+                @endforeach 
+                <br>
+
+                 @if (!empty($areaSummaries))
+                <div class="report-content" style="margin-bottom: 40px;">
+                    <h1>Average Death Literacy Report</h1>
+                    <p class="intro">
+                        Users scored high on <strong>{{ $areaSummaries[0]['area'] ?? '...' }}</strong>
+                        but could improve on <strong>{{ $areaSummaries[1]['area'] ?? '...' }}</strong>.
+                    </p>
+
+                    <ul class="bullets">
+                        @foreach ($areaSummaries as $summary)
+                            <li>{{ $summary['howYouScored'] }}</li>
+                            <li>{{ $summary['meaning'] }}</li>
+                            <li><em>{{ $summary['suggestion'] }}</em></li>
+                            <hr style="margin: 10px 0;">
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+                <br>
+                <a href="/admin/users"><p>See individual user scores</p></a>
+
+                
         
                 
 

@@ -7,11 +7,13 @@
 
 
     <style>
+        
+        
         body {
             font-family: 'Segoe UI', sans-serif;
             background-color: #f9f9f9;
             margin: 0;
-            padding: 20px;
+            padding: 20px 20px 0 20px;
             color: black
         }
 
@@ -189,11 +191,15 @@
             max-height: 350px;
         }
 
+        #bottomDIV{
+            margin-bottom: 50px;
+        }
+
     </style>
 </head>
 <body>
 
-<x-layout>
+<x-layout2>
     
     <div class="container">
     <div class="report-content">
@@ -216,14 +222,20 @@
             • Read our guide on grief management<br>
             • Explore our funeral planning guide <a href="https://example.com">example.com</a>
         </div>
-    </div>
+
+    </div id="bottomDIV">
 
     <div class="illustration">
         <img src="/images/report-illustration.png" alt="Clipboard report" />
     </div>
 </div>
 
-</x-layout>
+
+<footer id="footer2">
+    <p>HELP Application. All rights reserved. {{date('Y')}}</p>
+
+</footer>
+</x-layout2>
 
 
 

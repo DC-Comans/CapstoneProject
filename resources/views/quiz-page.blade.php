@@ -8,7 +8,7 @@
     <body>
 
         <x-layout>
-
+            <h1 style="color: black">Welcome to the healthy end of life planning quiz</h1>
             <a href="take-quiz/{{auth()->user()->id}}"><button class="btn login-btn" >Click here to take the HELP quiz</button></a>
 
             @if (auth()->user()->isAdmin == 1)
@@ -19,8 +19,8 @@
 
             @endif
 
-            <h1 style="color: red">THIS IS THE QUIZ PAGE</h1>
-            <a href="quiz-chart/{{auth()->user()->id}}"><h1 style="color: red">See your results</h1></a>
+            
+            <a href="quiz-chart/{{auth()->user()->id}}"><h1 style="color: red">See your last results</h1></a>
 
             @if (session('failure'))
     <div style="color: red; background-color: #ffe5e5; padding: 10px; margin: 10px 0; border: 1px solid red;">

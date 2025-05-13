@@ -48,6 +48,18 @@ body {
     position: fixed;
     width: 100%;
   }
+
+  #footer2{
+    background-color: aliceblue;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: black;
+    padding: 15px;
+    text-align: center;
+    bottom: 0;
+    position: static;
+    margin-top: 30px;
+    width: 100%;
+  }
   
   .logo {
     font-size: 1.2em;

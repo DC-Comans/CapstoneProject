@@ -87,7 +87,7 @@
 <x-layout2>
   <div class="container">
     <div class="report-content">
-      <!-- <h1>{{ auth()->user()->username }} – Last 3 Tests</h1>
+      <!--<h1>{{ auth()->user()->username }} – Last 3 Tests</h1>
 
       @foreach ($charts as $index => $chart)
         <div class="chart-container">
@@ -113,39 +113,21 @@
             }
           });
         </script>
-      @endforeach
-      -->
-
-      @if (!empty($areaSummaries))
-    <div class="report-content" style="margin-bottom: 40px;">
-        <h1>Your Death Literacy Report</h1>
-        <p class="intro">
-            You scored high on <strong>{{ $areaSummaries[0]['area'] ?? '...' }}</strong>
-            but could improve on <strong>{{ $areaSummaries[1]['area'] ?? '...' }}</strong>.
-        </p>
-
-        <ul class="bullets">
-            @foreach ($areaSummaries as $summary)
-                <li>{{ $summary['howYouScored'] }}</li>
-                <li>{{ $summary['meaning'] }}</li>
-                <li><em>{{ $summary['suggestion'] }}</em></li>
-                <hr style="margin: 10px 0;">
-            @endforeach
-        </ul>
-    </div>
-@endif
-
-
-
+      @endforeach -->
 
       @if (count($questions) > 0)
-        <h4 style="margin-top: 2rem;">Detailed Answers</h4>
+        <h4 style="margin-top: 2rem;">Detailed Answers for: <br>
+          id: {{$quizuser->id}}<br>
+          username: {{$quizuser->username}}<br>
+          email: {{$quizuser->email}}
+        
+        </h4>
         <table class="results-table">
           <thead>
             <tr>
               <th>#</th>
               <th>Question</th>
-              <th>Your Answer</th>
+              <th>Given Answer</th>
               
             </tr>
           </thead>
