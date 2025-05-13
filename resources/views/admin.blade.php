@@ -17,6 +17,7 @@
           
                 <p>Total users: {{$total}}</p>
                 <p>Non-staff users: {{$totalEdited}} </p>
+                <a href="/admin/users"><p>See individual user scores</p></a>
                 <p>Average scores:</p> <br>
                 @foreach ($areaSummaries as $summary)
                 <p>{{ $summary['area'] }}: {{ $summary['average'] }}</p>
@@ -42,12 +43,17 @@
                 </div>
             @endif
 
-                <br>
-                <a href="/admin/users"><p>See individual user scores</p></a>
+                
+                
 
                 
         
-                
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
 
                 
             </div>
