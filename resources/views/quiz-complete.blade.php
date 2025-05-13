@@ -201,7 +201,10 @@
 
         <ul class="bullets">
             @foreach ($areaSummaries as $summary)
+                <li>{{ $summary['howYouScored'] }}</li>
                 <li>{{ $summary['meaning'] }}</li>
+                <li>{{ $summary['suggestion'] }}</li>
+                <p>___________________________</p>
             @endforeach
         </ul>
 

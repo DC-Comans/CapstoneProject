@@ -48,7 +48,38 @@ class QuizController extends Controller
     }
 
     
-   $total = $questions->where('category', '!=', 't')->count();
+   $allQuestions = DB::table('quizzes')->get()->values();
+   // Build a unified sequence that includes titles
+$displayFlow = collect();
+$stepMap = [];  // Map step => index in full list
+
+$stepCounter = 0;
+foreach ($allQuestions as $index => $q) {
+    if ($q->category === 't') {
+        // If the next item is a real question, assign title to appear before it
+        $titlesByIndex[$index + 1] = $q->question;
+    } else {
+        $stepMap[$stepCounter] = $index; // Step N => full index
+        $stepCounter++;
+    }
+}
+
+$total = count($stepMap);
+   
+   
+   // Build section title mapping to steps
+    $sectionTitles = collect();
+    $stepIndex = 0;
+    foreach ($allQuestions as $q) {
+        if ($q->category === 't') {
+            $sectionTitles->push((object)[
+                'step' => $stepIndex,
+                'question' => $q->question
+            ]);
+        } elseif ($q->category !== 't') {
+            $stepIndex++;
+        }
+    }
 
     // ✅ QUIZ COMPLETED
     if ($step >= $total) {
@@ -386,6 +417,7 @@ foreach ($areaGroups as $area => $data) {
         'area' => $area,
         'average' => number_format($score, 2),
         'range' => $def[$bucket]['range'],
+        'howYouScored' => $def[$bucket]['how you scored'],
         'meaning' => $def[$bucket]['meaning'],
         'suggestion' => $def[$bucket]['suggestion']
     ];
@@ -402,8 +434,9 @@ foreach ($areaGroups as $area => $data) {
     ]);
     }
 
-    // ✅ ONGOING QUESTION
-    $currentQuestion = $questions[$step];
+    // Get current question by mapping current step
+    $currentIndex = $stepMap[$step];
+    $currentQuestion = $allQuestions[$currentIndex];
 
 
     // Determine options based on question category
@@ -425,7 +458,10 @@ if ($currentQuestion->category === 'dd' || $currentQuestion->category === 's4' |
     'options' => $options,
     'step' => $step,
     'total' => $total,
-    'category' => $currentQuestion->category 
+    'category' => $currentQuestion->category,
+    'sectionTitles' => $sectionTitles,
+    'titlesByIndex' => $titlesByIndex,
+    'currentIndex' => $currentIndex 
 ]);
 
 }
