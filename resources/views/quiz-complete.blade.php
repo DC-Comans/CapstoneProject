@@ -194,6 +194,7 @@
 <body>
 
 <x-layout>
+    
     <div class="container">
     <div class="report-content">
         <h1>Your Death Literacy Report</h1>
