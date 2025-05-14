@@ -520,26 +520,46 @@ if ($question && $question->category === 't') {
 
     public function submitQuiz(Request $request)
 {
+
+    if (!Auth::check()) {
+        return redirect('/');
+    }
+
+
+    if(!Auth::user()->isAdmin){
+            return redirect('/');}
+
+
+    $ids = $request->input('ids');
     $questions = $request->input('questions');
-    $answers = $request->input('answers');
+    $category = $request->input('category');
+    $area = $request->input('area');
+    $options = $request->input('options');
+    //$answers = $request->input('answers');
 
     // Prevent error if user deletes all inputs
-if (empty($questions) || empty($answers)) {
-    return redirect()->back()->with('failure', 'You must have at least one question and answer.');
+if (empty($questions)) {
+    return redirect()->back()->with('failure', 'You must have at least one question.');
 }
 
-    // Remove old quiz entries for this user
-    Quiz::where('user_id', Auth::id())->delete();
+    for ($i = 0; $i < count($questions); $i++) {
+    $data = [
+        'question' => $questions[$i],
+        'category' => $category[$i],
+        'area' => $area[$i],
+        'options' => $options[$i],
+    ];
 
-    // Insert new ones
-    foreach ($questions as $index => $question) {
-        $answer = $answers[$index];
-        Quiz::create([
-            'user_id' => Auth::id(),
-            'question' => $question,
-            'answer' => $answer,
-        ]);
+
+    if (!empty($ids[$i])) {
+        // Update existing question
+        Quiz::where('id', $ids[$i])->update($data);
+    } else {
+        // Insert new question
+        Quiz::create($data);
     }
+    }
+    
 
     
 
