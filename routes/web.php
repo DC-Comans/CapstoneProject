@@ -32,6 +32,7 @@ Route::get('/admin/users', [QuizController::class, 'adminUserList']);
 Route::get('/edit-quiz/{user_id}', [QuizController::class, "editQuiz"]);
 Route::post('/submit-quiz', [QuizController::class, 'submitQuiz']);
 Route::get('/quiz-chart-admin/{user_id}', [QuizController::class, "showAdminChart"]);
+Route::post('/admin/export', [UserController::class, 'export']);
 
 //Quizzes
 Route::get('/quiz', [QuizController::class, "quizPage"]);

@@ -4,6 +4,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <link rel="stylesheet" href="/css/main.css">
+
+        <style>
+            .download-button {
+            background-color: #3b82f6; /* Tailwind's blue-500 */
+            color: black;
+            padding: 8px 16px; /* py-2 px-4 */
+            border: none;
+            border-radius: 0.5rem; /* rounded */
+            cursor: pointer;
+            font-size: 16px;
+            }
+
+            .download-button:hover {
+            background-color: #2563eb; /* darker on hover */
+            }
+        </style>
+
     </head>
     <body>
 
@@ -48,16 +65,24 @@
 
                 
         
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-
                 
+
+                <form method="POST" action="/admin/export">
+    @csrf 
+    <button type="submit" class="download-button">
+        ⬇️ Download CSV
+    </button>
+</form>
             </div>
+
+            
               
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
         
         </body>
                 </html>
