@@ -436,15 +436,15 @@ public function adminScreen() {
         ],
         'Similar' => [
             'range' => 'Similar',
-            'how you scored' => 'Your score is about the same as most people’s.',
-            'meaning' => "You're about as comfortable talking about death as most people. That’s a solid place to be.",
-            'suggestion' => 'Keep having open conversations when the opportunity comes up—it helps create a more supportive space for everyone.'
+            'how you scored' => 'User score is about the same as most people’s.',
+            'meaning' => "Users are about as comfortable talking about death as most people.",
+            'suggestion' => 'Users should keep having open conversations when the opportunity comes up—it helps create a more supportive space for everyone.'
         ],
         'High' => [
             'range' => 'Higher',
-            'how you scored' => 'You scored higher than most people in talking about death and dying.',
-            'meaning' => 'You seem really comfortable talking about end-of-life matters, which is a real strength.',
-            'suggestion' => 'Use that comfort to gently support others who may find these conversations difficult. You can help make these talks feel safer.'
+            'how you scored' => 'Users scored higher than most people in talking about death and dying.',
+            'meaning' => 'Users seem really comfortable talking about end-of-life matters.',
+            'suggestion' => 'Users should gently support others who may find these conversations difficult.'
         ]
     ],
     'Hands-on Support' => [
@@ -452,21 +452,21 @@ public function adminScreen() {
         'high' => 5.89,
         'Low' => [
             'range' => 'Lower',
-            'how you scored' => 'You scored lower than others in hands-on care.',
-            'meaning' => 'You may not have had much experience helping someone physically at the end of life. That’s very common.',
-            'suggestion' => 'You could look into volunteering, or even just learn basic care skills—it can help build confidence over time.'
+            'how you scored' => 'Users scored lower than others in hands-on care.',
+            'meaning' => 'Users may not have had much experience helping someone physically at the end of life.',
+            'suggestion' => 'Users could look into volunteering, or even just learn basic care skills.'
         ],
         'Similar' => [
             'range' => 'Similar',
-            'how you scored' => 'Your score is in line with the average when it comes to hands-on support.',
-            'meaning' => 'You’ve had some hands-on experience, about the same as most people.',
-            'suggestion' => 'Share what you’ve learned, and look for chances to build on your skills when you feel ready.'
+            'how you scored' => 'User score is in line with the average when it comes to hands-on support.',
+            'meaning' => 'Users have had some hands-on experience, about the same as most people.',
+            'suggestion' => 'Users should share what they have learned.'
         ],
         'High' => [
             'range' => 'Higher',
-            'how you scored' => 'You scored higher than most people in hands-on support.',
-            'meaning' => 'You’ve clearly had experience helping someone directly, and that’s really valuable.',
-            'suggestion' => 'Consider mentoring others or getting involved in your community’s end-of-life care efforts. Your experience can make a difference.'
+            'how you scored' => 'Users scored higher than most people in hands-on support.',
+            'meaning' => 'Users clearly have had experience helping someone directly.',
+            'suggestion' => 'Users should consider mentoring others or getting involved in the community’s end-of-life care efforts.'
         ]
         ],
     'Community Support 1' => [
@@ -474,21 +474,21 @@ public function adminScreen() {
         'high' => 5.39,
         'Low' => [
             'range' => 'Lower',
-            'how you scored' => 'You scored lower than others in feeling supported by your community.',
-            'meaning' => 'You might feel like your community doesn’t offer much support around death and dying.',
-            'suggestion' => 'Think about ways you can connect with others—there may be more support out there than it seems.'
+            'how you scored' => 'Users scored lower than others in feeling supported by their community.',
+            'meaning' => 'Users might feel like their community doesn’t offer much support around death and dying.',
+            'suggestion' => 'Users should think about ways they could connect with others.'
         ],
         'Similar' => [
             'range' => 'Similar',
-            'how you scored' => 'Your score is typical when it comes to perceived community support.',
-            'meaning' => 'Your experience with community support is similar to most people’s.',
-            'suggestion' => 'Look for ways to strengthen those ties—community can be a big help during difficult times.'
+            'how you scored' => 'User score is typical when it comes to perceived community support.',
+            'meaning' => "User's experience with community support is similar to most people’s.",
+            'suggestion' => 'Users should look for ways to strengthen those ties.'
         ],
         'High' => [
             'range' => 'Higher',
-            'how you scored' => 'You scored higher than most in community support.',
-            'meaning' => 'You feel like your community is pretty supportive, which is wonderful.',
-            'suggestion' => 'Help keep that support going by getting involved and welcoming others in.'
+            'how you scored' => 'Users scored higher than most in community support.',
+            'meaning' => 'Users feel like their community is pretty supportive.',
+            'suggestion' => 'Users should keep that support going by getting involved and welcoming others in.'
         ]
     ],
     'Community Support 2' => [
@@ -496,21 +496,21 @@ public function adminScreen() {
         'high' => 6.24,
         'Low' => [
             'range' => 'Lower',
-            'how you scored' => 'You scored lower in how engaged your community feels around end-of-life care.',
-            'meaning' => 'It might feel like your community isn’t very involved in end-of-life care.',
-            'suggestion' => 'You could explore local initiatives or even start conversations that help get more people engaged.'
+            'how you scored' => 'Users scored lower in how engaged their community feels around end-of-life care.',
+            'meaning' => 'It might feel like their community isn’t very involved in end-of-life care.',
+            'suggestion' => 'Users could explore local initiatives or even start conversations that help get more people engaged.'
         ],
         'Similar' => [
             'range' => 'Similar',
-            'how you scored' => 'Your community engagement score is similar to most people’s.',
-            'meaning' => 'Your community’s involvement seems about average.',
-            'suggestion' => 'Keep encouraging participation—it helps everyone feel less alone.'
+            'how you scored' => 'Users community engagement score is similar to most people’s.',
+            'meaning' => 'Users community’s involvement seems about average.',
+            'suggestion' => 'Users should keep encouraging participation—it helps everyone feel less alone.'
         ],
         'High' => [
             'range' => 'Higher',
-            'how you scored' => 'You scored higher than others in community engagement.',
-            'meaning' => 'You feel your community really steps up when it comes to end-of-life care.',
-            'suggestion' => 'You can help others feel confident joining in too—your example can inspire more engagement.'
+            'how you scored' => 'Users scored higher than others in community engagement.',
+            'meaning' => 'Users feel their community really steps up when it comes to end-of-life care.',
+            'suggestion' => 'Users can help others feel confident joining in too—your example can inspire more engagement.'
         ]
     ],
     'Experience' => [
@@ -518,9 +518,9 @@ public function adminScreen() {
         'high' => 7.05,
         'Low' => [
             'range' => 'Lower',
-            'how you scored' => 'You scored lower than others in experience with death and dying.',
-            'meaning' => 'You may not have had many personal or professional experiences with death or dying.',
-            'suggestion' => "Consider listening to others' stories, or gently reflect on your own feelings. That’s a good starting point."
+            'how you scored' => 'Users scored lower than others in experience with death and dying.',
+            'meaning' => 'Users may not have had many personal or professional experiences with death or dying.',
+            'suggestion' => "Users should consider listening to others' stories, or gently reflect on your their feelings."
         ],
         'Similar' => [
             'range' => 'Similar',
@@ -540,21 +540,21 @@ public function adminScreen() {
         'high' => 5.08,
         'Low' => [
             'range' => 'Lower',
-            'how you scored' => 'You scored lower than others in death-related knowledge.',
-            'meaning' => 'You might not feel very informed about end-of-life care or services right now.',
-            'suggestion' => 'Learning even just a bit more—like what options exist—can help you feel more prepared and confident.'
+            'how you scored' => 'Users scored lower than others in death-related knowledge.',
+            'meaning' => 'Users might not feel very informed about end-of-life care or services right now.',
+            'suggestion' => 'Users should try learning even just a bit more—like what options exist.'
         ],
         'Similar' => [
             'range' => 'Similar',
-            'how you scored' => 'Your knowledge score is about the same as others’.',
-            'meaning' => 'You’ve got a good, solid base of knowledge—enough to understand what’s going on.',
-            'suggestion' => 'Keep asking questions and exploring. It’ll help you and those you care about.'
+            'how you scored' => 'Users knowledge score is about the same as others’.',
+            'meaning' => 'Users have a good, solid base of knowledge, enough to understand what’s going on.',
+            'suggestion' => 'Users should asking questions and exploring.'
         ],
         'High' => [
             'range' => 'Higher',
             'how you scored' => 'You scored higher than most people in knowledge about end-of-life matters.',
-            'meaning' => 'You know quite a lot about death-related matters. That’s a powerful tool.',
-            'suggestion' => 'Consider helping others understand what you’ve learned—many people are looking for someone who can guide them.'
+            'meaning' => 'Users know quite a lot about death-related matters.',
+            'suggestion' => "Users should consider helping others understand what they've learned."
         ]
     ],
     'Community (Overall)' => [
@@ -562,21 +562,21 @@ public function adminScreen() {
         'high' => 5.70,
         'Low' => [
             'range' => 'Lower',
-            'how you scored' => 'You scored lower than others overall in community-related support.',
-            'meaning' => 'You might not feel very supported by your community around death-related matters.',
-            'suggestion' => 'See if there are community groups or events that can help build that support. Small actions make a big difference.'
+            'how you scored' => 'Users scored lower than others overall in community-related support.',
+            'meaning' => 'Users might not feel very supported by their community around death-related matters.',
+            'suggestion' => 'Users should see if there are community groups or events that can help build that support. Small actions make a big difference.'
         ],
         'Similar' => [
             'range' => 'Similar',
-            'how you scored' => 'Your overall community score is similar to others’.',
-            'meaning' => 'Your sense of community support is about the same as others’.',
-            'suggestion' => 'Keep showing up and being part of the conversation—it helps the whole community grow stronger.'
+            'how you scored' => 'User overall community score is similar to others’.',
+            'meaning' => "User's sense of community support is about the same as others’.",
+            'suggestion' => 'Users should keep showing up and being part of the conversation.'
         ],
         'High' => [
             'range' => 'Higher',
-            'how you scored' => 'You scored higher than others in overall community support.',
-            'meaning' => 'You see your community as supportive and engaged around dying and grieving. That’s a real strength.',
-            'suggestion' => 'Share what’s working—others might be looking for ideas to build similar support in their own communities.'
+            'how you scored' => 'Users scored higher than others in overall community support.',
+            'meaning' => 'Users see their community as supportive and engaged around dying and grieving.',
+            'suggestion' => 'Users should share what’s working with others.'
         ]
     ],
     'Practical Knowledge (Overall)' => [
@@ -584,21 +584,21 @@ public function adminScreen() {
         'high' => 6.14,
         'Low' => [
             'range' => 'Lower',
-            'how you scored' => 'You scored lower than others in overall practical knowledge.',
-            'meaning' => 'You might not feel super confident supporting someone through dying yet, and that’s totally normal.',
-            'suggestion' => 'Start small—maybe offer practical help to someone or learn more about what’s involved in end-of-life care.'
+            'how you scored' => 'Users scored lower than others in overall practical knowledge.',
+            'meaning' => 'Users might not feel super confident supporting someone through dying yet.',
+            'suggestion' => 'Users should start small, maybe offer practical help to someone or learn more about what’s involved in end-of-life care.'
         ],
         'Similar' => [
             'range' => 'Similar',
-            'how you scored' => 'Your score is similar to others’ in practical knowledge.',
-            'meaning' => 'You’ve got a solid base of experience, right in line with others.',
-            'suggestion' => 'Keep building on what you know, and don’t hesitate to step in when you see someone needs support.'
+            'how you scored' => 'User score is similar to others’ in practical knowledge.',
+            'meaning' => 'Users have got a solid base of experience, right in line with others.',
+            'suggestion' => 'Users should keep building on what they know and offer support when needed.'
         ],
         'High' => [
             'range' => 'Higher',
-            'how you scored' => 'You scored higher than most in practical knowledge.',
-            'meaning' => 'You’ve got strong practical knowledge. You know what to do and how to be there for someone.',
-            'suggestion' => 'Think about sharing what you know—others could really benefit from your experience.'
+            'how you scored' => 'Users scored higher than most in practical knowledge.',
+            'meaning' => 'Users have strong practical knowledge. They know what to do and how to be there for someone.',
+            'suggestion' => 'Users should think about sharing what they know.'
         ]
     ],
     'Death Literacy Index (Overall)' => [
@@ -606,21 +606,21 @@ public function adminScreen() {
         'high' => 5.8,
         'Low' => [
             'range' => 'Lower',
-            'how you scored' => 'You scored lower than others on the overall Death Literacy Index.',
-            'meaning' => 'You may not feel very comfortable or knowledgeable about death yet, but that can change with time.',
-            'suggestion' => 'Start with one step—talk to someone, read something, or reflect on what death means to you. It all adds up.'
+            'how you scored' => 'Users scored lower than others on the overall Death Literacy Index.',
+            'meaning' => 'Users may not feel very comfortable or knowledgeable about death yet.',
+            'suggestion' => 'Users should start with one step—talk to someone, read something, or reflect on what death means to them.'
         ],
         'Similar' => [
             'range' => 'Similar',
-            'how you scored' => 'Your score is about average across all areas of death literacy.',
-            'meaning' => 'You’re in a similar place to most people—there’s a good base, and room to grow.',
-            'suggestion' => 'Keep learning, talking, and staying open—it’s a journey that grows with you.'
+            'how you scored' => 'User score is about average across all areas of death literacy.',
+            'meaning' => 'Users are in a similar place to most people.',
+            'suggestion' => 'Users should keep learning, talking, and staying open.'
         ],
         'High' => [
             'range' => 'Higher',
-            'how you scored' => 'You scored higher than most people on the Death Literacy Index.',
-            'meaning' => 'You seem to have a strong level of comfort, knowledge, and experience. That’s a real gift.',
-            'suggestion' => 'Think about how you can support others on their journey—you have a lot to offer.'
+            'how you scored' => 'Users scored higher than most people on the Death Literacy Index.',
+            'meaning' => 'Users seem to have a strong level of comfort, knowledge, and experience.',
+            'suggestion' => 'Users should think about how they can support others on their journey.'
         ]
     ]
         ];

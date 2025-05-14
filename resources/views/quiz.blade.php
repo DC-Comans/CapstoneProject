@@ -113,10 +113,37 @@
           @endif
         </div>
 
+
+
+
         <!-- Right-side image -->
+
+        @php
+      $third = ceil($total / 3);
+        @endphp
+
+        @if ($step < $third)
         <div class="hidden md:block md:w-1/2">
           <img src="/images/quiz-illustration.png" alt="Quiz" class="w-full max-w-md mx-auto">
         </div>
+
+        
+
+        @elseif($step < $third * 2)
+        <div class="hidden md:block md:w-1/2">
+          <img src="/images/quiz-illustration_2.png" alt="Quiz" class="w-full max-w-md mx-auto">
+        </div>
+
+        @else
+        <div class="hidden md:block md:w-1/2">
+          <img src="/images/quiz-illustration_3.png" alt="Quiz" class="w-full max-w-md mx-auto">
+        </div>
+
+
+        @endif
+
+        
+        <
 
       </div>
     </div>

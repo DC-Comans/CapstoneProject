@@ -115,6 +115,8 @@
         </script>
       @endforeach -->
 
+      <a href="/admin/users" style="color: black">Back</a>
+
       @if (count($questions) > 0)
         <h4 style="margin-top: 2rem;">Detailed Answers for: <br>
           id: {{$quizuser->id}}<br>

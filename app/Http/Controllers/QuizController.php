@@ -553,7 +553,6 @@ if (empty($questions) || empty($answers)) {
         
         if(Auth::check()){
             $questions = DB::table('quizzes')
-            ->where('user_id', $userId)
             ->get();
             
             return view("edit-quiz", ['questions' => $questions]);

@@ -1,4 +1,15 @@
-<x-layout>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Test Charts</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+
+<x-layout2>
   <h1 style="color: red">EDIT QUIZ</h1>
 
   <form method="POST" action="/submit-quiz">
@@ -61,4 +72,9 @@
       margin-right: 10px;
     }
   </style>
-</x-layout>
+</x-layout2>
+<footer style="margin-top: 50px" id="footer2">
+    <p>HELP Application. All rights reserved. {{ date('Y') }}</p>
+  </footer>
+</body>
+</html>

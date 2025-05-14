@@ -137,7 +137,7 @@
 
 
 
-
+<!--
       @if (count($questions) > 0)
         <h4 style="margin-top: 2rem;">Detailed Answers</h4>
         <table class="results-table">
@@ -160,7 +160,7 @@
             @endforeach
           </tbody>
         </table>
-      @endif
+      @endif -->
     </div>
 
     <!-- <div class="illustration">
