@@ -401,6 +401,7 @@ public function adminScreen() {
 
     $total = DB::table('users')->count();
     $totalEdited = DB::table('users')->where('isAdmin', 0)->count();
+    $usersLoggedIn = DB::table('sessions')->count();
     $averageScore = round(DB::table('results')->avg('result'), 2);
 
     // Get all answers with areas
@@ -648,7 +649,8 @@ public function adminScreen() {
     return view('admin', [
         'users' => $total, 
         'total' => $total, 
-        'totalEdited' => $totalEdited, 
+        'totalEdited' => $totalEdited,
+        'usersLoggedIn' => $usersLoggedIn, 
         'averageScore' => $averageScore,
         'areaSummaries' => $areaSummaries
     ]);

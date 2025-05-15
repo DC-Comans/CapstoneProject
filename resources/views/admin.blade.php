@@ -34,6 +34,7 @@
           
                 <p>Total users: {{$total}}</p>
                 <p>Non-staff users: {{$totalEdited}} </p>
+                <p>Logged in users: {{$usersLoggedIn}} </p>
                 <a href="/admin/users"><p>See individual user scores</p></a>
                 <p>Average scores:</p> 
                 @foreach ($areaSummaries as $summary)
