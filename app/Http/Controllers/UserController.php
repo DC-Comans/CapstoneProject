@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\View;
 use App\Events\ExampleEvent;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Carbon;
 
 class UserController extends Controller
 {
@@ -401,7 +402,16 @@ public function adminScreen() {
 
     $total = DB::table('users')->count();
     $totalEdited = DB::table('users')->where('isAdmin', 0)->count();
-    $usersLoggedIn = DB::table('sessions')->count();
+    
+    
+    $activeThreshold = Carbon::now()->subMinutes(15)->timestamp;
+
+    $usersLoggedIn = DB::table('sessions')
+        ->where('last_activity', '>=', $activeThreshold)
+        ->distinct('user_id')
+        ->count('user_id');
+    
+   // $usersLoggedIn = DB::table('sessions')->count();
     $averageScore = round(DB::table('results')->avg('result'), 2);
 
     // Get all answers with areas
