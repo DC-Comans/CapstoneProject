@@ -4,11 +4,51 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <link rel="stylesheet" href="/css/main.css">
+
+
+
+        <style>
+          .custom-success {
+          background-color: #d4edda;
+          border-left: 5px solid #28a745;
+          color: #155724;
+          padding: 15px;
+          border-radius: 4px;
+          margin-bottom: 15px;
+      }
+
+      .custom-failure {
+          background-color: #f8d7da;
+          border-left: 5px solid #dc3545;
+          color: #721c24;
+          padding: 15px;
+          border-radius: 4px;
+          margin-bottom: 15px;
+      }
+
+        </style>
+
     </head>
     <body>
       <x-layout>
+
+
       @auth
 <h1 style="color:red">HELLO</h1>
+
+
+@if (session('success'))
+            <div class="custom-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('failure'))
+            <div class="custom-failure">
+                {{ session('failure') }}
+            </div>
+        @endif
+
       @else
       <div class="container">
         <div class="outer-box">

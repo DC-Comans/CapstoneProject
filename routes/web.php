@@ -49,6 +49,9 @@ Route::get('/resources', function () {
 Route::get('/contact', function () {
     return view('contact');});
 
+ Route::post('/contact', function () {
+return redirect('/')->with('success', 'Thank you. A member of our staff will contact you shortly');});
+
 
 
 

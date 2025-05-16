@@ -21,7 +21,7 @@
                     <input type="text" id="name" name="name">
 
                     <label for="email"><strong>Email:</strong></label>
-                    <input type="text" id="email" name="email">
+                    <input type="email" id="email" name="email">
             
                     <label for="text"><strong>How we can help:</strong></label>
                     
