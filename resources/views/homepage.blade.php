@@ -32,12 +32,7 @@
     <body>
       <x-layout>
 
-
-      @auth
-<h1 style="color:red">HELLO</h1>
-
-
-@if (session('success'))
+        @if (session('success'))
             <div class="custom-success">
                 {{ session('success') }}
             </div>
@@ -48,6 +43,12 @@
                 {{ session('failure') }}
             </div>
         @endif
+
+      @auth
+<h1 style="color:red">HELLO</h1>
+
+
+
 
       @else
       <div class="container">
