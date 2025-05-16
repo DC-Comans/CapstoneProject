@@ -52,14 +52,15 @@ class QuizController extends Controller
    // Build a unified sequence that includes titles
 $displayFlow = collect();
 $stepMap = [];  // Map step => index in full list
+$titlesByIndex = [];
 
 $stepCounter = 0;
 foreach ($allQuestions as $index => $q) {
     if ($q->category === 't') {
-        // If the next item is a real question, assign title to appear before it
+        // Assign title to appear before the next question
         $titlesByIndex[$index + 1] = $q->question;
     } else {
-        $stepMap[$stepCounter] = $index; // Step N => full index
+        $stepMap[$stepCounter] = $index; // step -> index in allQuestions
         $stepCounter++;
     }
 }
@@ -143,22 +144,31 @@ $total = count($stepMap);
         ->each
         ->delete();
 
-    // Save main result
+    
+        // Delete previous result and answers for this user
+        $previousResult = Result::where('user_id', $userId)->latest()->first();
+        if ($previousResult) {
+            Answer::where('result_id', $previousResult->id)->delete();
+            $previousResult->delete();
+        }
+
+        // Create fresh result
         $result = Result::create([
-        'user_id' => $userId,
-        'TestNumber' => $nextTestNumber,
-        'result' => $percentage,
-    ]);
+            'user_id' => $userId,
+            'TestNumber' => $nextTestNumber,
+            'result' => $percentage,
+        ]);
 
     // Save each answer
     foreach ($sessionAnswers as $a) {
         Answer::create([
-            'user_id' => $userId,
-            'result_id' => $result->id,
-            'question' => $a['question'],
-            'given_answer' => $a['given_answer'],
-            'quiz_id' => $a['quiz_id'] ?? null
-        ]);
+    'result_id' => $result->id,
+    'user_id' => $userId,
+    'quiz_id' => $a['quiz_id'] ?? null,
+    'question' => $a['question'],
+    'given_answer' => $a['given_answer'],
+]);
+
     }
 
     session([
@@ -437,8 +447,8 @@ foreach ($areaGroups as $area => $data) {
     }
 
     // Get current question by mapping current step
-    $currentIndex = $stepMap[$step];
-    $currentQuestion = $allQuestions[$currentIndex];
+    $currentIndex = $stepMap[$step] ?? null;
+$currentQuestion = $currentIndex !== null ? $allQuestions[$currentIndex] : null;
 
 
     // Determine options based on question category
@@ -475,48 +485,52 @@ if ($currentQuestion->category === 'dd' || $currentQuestion->category === 's4' |
 {
     $selected = $request->input('selected');
     if ($selected === 'Other (please specify)') {
-    $selected = $request->input('otherText');
-}
-    $correct = $request->input('correct');
+        $selected = $request->input('otherText');
+    }
+
     $step = (int) $request->input('step');
+    $user = Auth::id();
+
+    // Rebuild stepMap to get correct question index
+    $allQuestions = DB::table('quizzes')->get()->values();
+
+    $stepMap = [];
+    $stepCounter = 0;
+    foreach ($allQuestions as $index => $q) {
+        if ($q->category !== 't') {
+            $stepMap[$stepCounter] = $index;
+            $stepCounter++;
+        }
+    }
+
+    $currentIndex = $stepMap[$step] ?? null;
+    $question = $currentIndex !== null ? $allQuestions[$currentIndex] : null;
+
+    if (!$question) {
+        return redirect()->route('quiz.take', ['userId' => $user, 'step' => $step + 1]);
+    }
+
+    $correct = $question->answer;
 
     $isCorrect = $selected === $correct;
 
-    $user = Auth::user()->id;
-
-    // Store score in session or DB (this example uses session)
+    // Update session score if applicable
     $score = session('score', 0);
     session(['score' => $isCorrect ? $score + 1 : $score]);
 
-
-    // Get current question
-    //$userId = Auth::id();
-    $question = DB::table('quizzes')
-    ->skip($step)
-    ->take(1)
-    ->first();
-
-    // Skip title-only questions
-if ($question && $question->category === 't') {
-    return redirect()->route('quiz.take', [
-        'userId' => Auth::id(),
-        'step' => $step + 1
-    ]);
-}
-
-    // Store answer in session
+    // Save answer
     $answers = session('answers', []);
     $answers[] = [
-    'question' => $question->question ?? 'Unknown',
-    'given_answer' => $selected,
-    'area' => $question->area ?? null,
-    'quiz_id' => $question->id ?? null,
-];
-
+        'question' => $question->question ?? 'Unknown',
+        'given_answer' => $selected,
+        'area' => $question->area ?? null,
+        'quiz_id' => $question->id ?? null,
+    ];
     session(['answers' => $answers]);
 
     return redirect()->route('quiz.take', ['userId' => $user, 'step' => $step + 1]);
 }
+
 
     public function submitQuiz(Request $request)
 {
