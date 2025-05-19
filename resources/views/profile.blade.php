@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="/css/main.css">
     </head>
     <body>
-
+    <div style="height: 100vh; background: linear-gradient(to bottom, #ccf5e7, #ffffff);">
         <x-layout>
             
             
@@ -20,7 +20,7 @@
                 <a href="/account-edit/{{auth()->user()->id}}"><button>Edit Account Information</button></a>
             </div>
               
-        
+        </div>
         </body>
                 </html>
         </x-layout>

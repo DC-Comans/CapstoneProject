@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="/css/main.css">
     </head>
     <body>
-
+        <div style="height: 100vh; background: linear-gradient(to bottom, #ccf5e7, #ffffff);">
         <x-layout>
             
             <form method="POST" action="/account-edit/{{auth()->user()->id}}">
@@ -35,6 +35,7 @@
         <div style="display: flex;justify-content: center;align-items: center; height: 60px;">
         <a href="/delete-account/{{auth()->user()->id}}"><button style="padding: 10px 20px;font-size: 16px;background-color: red;color: white;border: none;cursor: pointer;" type="submit" class="">Delete Account</button></a>
         </div>
+    </div>
         </body>
                 </html>
         </x-layout>
