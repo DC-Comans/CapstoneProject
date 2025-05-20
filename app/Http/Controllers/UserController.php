@@ -190,7 +190,7 @@ public function logout(){
         $profile = DB::table('profiles')
         ->join('users', 'profiles.user_id', '=', 'users.id')
         ->where('profiles.user_id', $user_id)
-        ->select('profiles.username', 'profiles.DOB', 'users.email')
+        ->select('profiles.username', 'profiles.DOB', 'profiles.avatar', 'users.email')
         ->first(); // because you're expecting one profile per user
 
 
@@ -242,7 +242,8 @@ public function logout(){
             $incomingFields = $request->validate([
             'DOB' => ['required', 'date'],
             'email' => ['required', 'email', Rule::unique('users')->ignore($user_id)],
-            'password' => ['required']
+            'password' => ['required'],
+            'profile_picture' => ['nullable', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048']
 
             ]);
 
@@ -259,13 +260,22 @@ public function logout(){
             'updated_at' => now()
         ]);
 
-    // Update `profiles` table (DOB only)
-    DB::table('profiles')
-        ->where('user_id', $user_id)
-        ->update([
+
+     // Handle profile picture upload
+    if ($request->hasFile('profile_picture')) {
+        $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+
+        DB::table('profiles')->where('user_id', $user_id)->update([
+            'avatar' => $path,
             'DOB' => $incomingFields['DOB'],
             'updated_at' => now()
         ]);
+    } else {
+        DB::table('profiles')->where('user_id', $user_id)->update([
+            'DOB' => $incomingFields['DOB'],
+            'updated_at' => now()
+        ]);
+    }
 
 
         
