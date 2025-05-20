@@ -14,6 +14,7 @@ use App\Events\ExampleEvent;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -389,10 +390,20 @@ public function logout(){
         'password' => ['required']
          ]);
 
-         $user = \App\Models\User::find($user_id);
+         $user = User::find($user_id);
 
             if (!$user || !Hash::check($request->password, $user->password)) {
         return redirect()->back()->withErrors(['password' => 'Incorrect password. Account was not deleted.']);}
+
+
+
+            
+            $avatarPath = DB::table('profiles')->where('user_id', $user_id)->value('avatar');
+
+            if ($avatarPath && $avatarPath !== 'default-avatar.png') {
+                Storage::disk('public')->delete($avatarPath);
+            }
+
 
             Auth::logout(); // log out first
             $user->delete(); // remove from DB
