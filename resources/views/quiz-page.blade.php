@@ -83,6 +83,7 @@
         .admin-btn {
         background-color: #bbb;
         color: #333;
+        margin-top: 10px
     }
     .admin-btn:hover {
         background-color: #999;
