@@ -22,7 +22,7 @@
         </style>
 
     </head>
-    <body>
+    <body style="background: linear-gradient(to bottom right, #f0fdf4, #e0f7fa);">
 
         <x-layout>
             
