@@ -183,7 +183,7 @@ public function logout(){
             return redirect('/');}
 
 
-            if(Auth::id() != $user_id || !Auth::user()->isAdmin){
+            if(Auth::id() != $user_id && !Auth::user()->isAdmin){
                 return redirect('/');}
             
 
@@ -206,7 +206,7 @@ public function logout(){
             return redirect('/');}
 
 
-            if(Auth::id() != $user_id || !Auth::user()->isAdmin){
+            if(Auth::id() != $user_id && !Auth::user()->isAdmin){
                 return redirect('/');
             }
 
