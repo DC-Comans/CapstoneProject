@@ -14,7 +14,7 @@
             <div class="container mx-auto p-4 " style="color: black">
                 <h2 style="font-size: 35" class="text-xl font-bold text-black mb-4">User Profile</h2>
                 <p style="font-size: 24" class="text-black"><strong>Username:</strong> {{ $profile->username }}</p>
-                <p style="font-size: 24" class="text-black"><strong>Upload Image:</strong></p>
+                <p style="font-size: 24" class="text-black"><strong>Upload Image (10 mb):</strong></p>
                 <input type="file" name="profile_picture" accept="image/*">
                 <p style="font-size: 24" class="text-black"><strong>Date of Birth:</strong></p> <input type="date" id="DOB" name="DOB" value="{{$profile->DOB}}">
                 <label style="padding-top: 20px; padding-bottom: 10px;" for="email"><strong>Email:</strong></label>

@@ -183,7 +183,7 @@ public function logout(){
             return redirect('/');}
 
 
-            if(Auth::id() != $user_id){
+            if(Auth::id() != $user_id || !Auth::user()->isAdmin){
                 return redirect('/');}
             
 
@@ -206,7 +206,7 @@ public function logout(){
             return redirect('/');}
 
 
-            if(Auth::id() != $user_id){
+            if(Auth::id() != $user_id || !Auth::user()->isAdmin){
                 return redirect('/');
             }
 
@@ -244,7 +244,7 @@ public function logout(){
             'DOB' => ['required', 'date'],
             'email' => ['required', 'email', Rule::unique('users')->ignore($user_id)],
             'password' => ['required'],
-            'profile_picture' => ['nullable', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048']
+            'profile_picture' => ['nullable', 'image', 'mimes:jpg,jpeg,png,gif', 'max:10000']
 
             ]);
 
