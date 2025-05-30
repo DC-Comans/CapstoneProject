@@ -116,7 +116,7 @@
 
 
 
-        <!-- Right-side image -->
+        
 
         @php
       $fourth = ceil($total / 4);

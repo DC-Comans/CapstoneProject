@@ -192,7 +192,7 @@ public function logout(){
         ->join('users', 'profiles.user_id', '=', 'users.id')
         ->where('profiles.user_id', $user_id)
         ->select('profiles.username', 'profiles.DOB', 'profiles.avatar', 'users.email')
-        ->first(); // because you're expecting one profile per user
+        ->first();
 
 
         

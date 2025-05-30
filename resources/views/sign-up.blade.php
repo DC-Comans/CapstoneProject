@@ -43,9 +43,9 @@
           flex: 1;
           display: flex;
           flex-direction: column;
-          justify-content: flex-end; /* cards lower */
+          justify-content: flex-end;
           align-items: center;
-          padding-bottom: 100px; /* space above footer */
+          padding-bottom: 100px;
       }
 
       .card-container {
